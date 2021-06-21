@@ -19,8 +19,9 @@ class TestST01ProcessoSeletivo():
     def teardown_method(self, method):
         self.driver.quit()
 
+    # Cadastro de um novo usuário
     def test_cT01Criarusurio(self):
-        self.driver.get("http://automationpractice.com//index.php")
+        self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1550, 838)
         self.driver.find_element(By.LINK_TEXT, "Sign in").click()
         self.driver.find_element(By.ID, "email_create").send_keys(
@@ -76,12 +77,13 @@ class TestST01ProcessoSeletivo():
         assert self.driver.find_element(
             By.CSS_SELECTOR, ".page-heading").text == "MY ACCOUNT"
 
+    # Valida se o usuário cadastrado consegue fazer login
     def test_cT02Validarusurio(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.LINK_TEXT, "Sign in").click()
         self.driver.find_element(By.ID, "email").send_keys(
-            "talesandrade@gmail.com")
+            "tandrade@gmail.com")
         self.driver.find_element(By.ID, "passwd").send_keys("12345")
         self.driver.find_element(
             By.CSS_SELECTOR, "#SubmitLogin > span").click()
@@ -89,6 +91,7 @@ class TestST01ProcessoSeletivo():
         assert self.driver.find_element(
             By.CSS_SELECTOR, ".page-heading").text == "MY ACCOUNT"
 
+    # Realiza a compra de uma camiseta
     def test_cT03Realizarcompra(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
@@ -121,6 +124,7 @@ class TestST01ProcessoSeletivo():
             By.CSS_SELECTOR, ".cheque-indent > .dark").text == "Your order on My Store is complete."
         self.driver.find_element(By.LINK_TEXT, "Back to orders").click()
 
+    # Valida se os dados cadastrados foram salvos corretamente
     def test_cT04Validarinformacoes(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
@@ -137,7 +141,7 @@ class TestST01ProcessoSeletivo():
             By.ID, "lastname").get_attribute("value")
         assert value == "Andrade"
         value = self.driver.find_element(By.ID, "email").get_attribute("value")
-        assert value == "talesandrade@gmail.com"
+        assert value == "tandrade@gmail.com"
         value = self.driver.find_element(By.ID, "days").get_attribute("value")
         assert value == "3"
         value = self.driver.find_element(
@@ -146,12 +150,13 @@ class TestST01ProcessoSeletivo():
         value = self.driver.find_element(By.ID, "years").get_attribute("value")
         assert value == "1997"
 
+    # Faz o login e verifica quantos itens o usuário tem na wishlist para validar o redirecionamento
     def test_cT05Logarcomwishlist(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.LINK_TEXT, "Sign in").click()
         self.driver.find_element(By.ID, "email").send_keys(
-            "talesandrade@gmail.com")
+            "tandrade@gmail.com")
         self.driver.find_element(By.ID, "passwd").send_keys("12345")
         self.driver.find_element(
             By.CSS_SELECTOR, "#SubmitLogin > span").click()
@@ -164,19 +169,21 @@ class TestST01ProcessoSeletivo():
         else:
             print(str("falha"))
 
+    # Realizar o logout do sistema e é redirecionado para a home
     def test_cT06Logout(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.LINK_TEXT, "Sign out").click()
         assert self.driver.title == "My Store"
 
+    # Valida se é exibido mensagem de erro ao cadastrar usuário já existente
     def test_cT07Criarusurioduplicado(self):
         self.driver.get("http://automationpractice.com/index.php")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.LINK_TEXT, "Sign in").click()
         self.driver.implicitly_wait(10)
         self.driver.find_element(By.ID, "email_create").send_keys(
-            "talesandrade@gmail.com")
+            "tandrade@gmail.com")
         self.driver.find_element(
             By.CSS_SELECTOR, "#SubmitCreate > span").click()
         self.driver.implicitly_wait(10)
